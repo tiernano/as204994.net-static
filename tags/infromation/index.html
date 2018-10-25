@@ -4,14 +4,15 @@
 	<meta charset="UTF-8">
 	<meta name="viewport" content="width=device-width, initial-scale=1">
 	<meta http-equiv="X-UA-Compatible" content="IE=edge">
-	<title>Peering</title>
+	<title>Infromation</title>
 	<script>(function(d,e){d[e]=d[e].replace("no-js","js");})(document.documentElement,"className");</script>
-	<meta name="description" content="Peering Info and policy">
+	<meta name="description" content="">
 	<meta name="generator" content="Hugo 0.46-DEV" />
 	
 	
 	<link rel="dns-prefetch" href="//fonts.googleapis.com">
 	<link rel="dns-prefetch" href="//fonts.gstatic.com">
+	<link rel="alternate" type="application/rss+xml" href="/tags/infromation/index.xml" title="AS204994">
 	<link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Open+Sans:400,400i,700">
 	<link rel="stylesheet" href="/css/style.css">
 	<link rel="shortcut icon" href="/favicon.ico">
@@ -50,7 +51,7 @@ if (!doNotTrack) {
 		<li class="menu__item">
 			<a class="menu__link" href="/about/">About</a>
 		</li>
-		<li class="menu__item menu__item--active">
+		<li class="menu__item">
 			<a class="menu__link" href="/peering/">Peering</a>
 		</li>
 		<li class="menu__item">
@@ -64,37 +65,34 @@ if (!doNotTrack) {
 		<div class="wrapper flex">
 			<section class="primary">
 			
-<main class="main" role="main">
-	<article class="post">
-		<header class="post__header">
-			<h1 class="post__title">Peering</h1>
-			
-		</header><div class="content post__content clearfix">
-			
-
-<p>Peering Info is available on <a href="https://www.peeringdb.com/net/15369">Peering DB</a> or you can email me at peering [AT] as204994 [dot] net.</p>
-
-<h2 id="our-peering-policy-is-open">Our peering policy is Open.</h2>
-
-<ul>
-<li>Peers may only send traffic to destinations announced by AS204994.</li>
-<li>Peers may only send traffic originating from their own / customer networks.</li>
-<li>Peers are not allowed to point static routes towards AS204994.</li>
-<li>Peers must operate a NOC which is reachable by phone or email.</li>
-<li>Peers should cooperate in any case of abuse.</li>
-<li>Peers must have an AS-SET registered. <a href="https://bgp.he.net/irr/as-set/AS-LIMITEDSLIPNET">AS-LIMITEDSLIPNET</a> is ours.</li>
-</ul>
-
-		</div>
-		
-	</article>
+<main class="main list" role="main">
+	<header class="main__header">
+		<h1 class="main__title">Infromation</h1>
+	</header><article class="list__item post">
+	<header class="list__header">
+		<h3 class="list__title post__title ">
+			<a href="/post/quick-overview/" rel="bookmark">
+			Quick Overview of the network
+			</a>
+		</h3>
+		<div class="list__meta meta">
+<div class="meta__item-datetime meta__item">
+	<svg class="meta__icon icon icon-time" width="16" height="14" viewBox="0 0 16 16"><path d="m8-.0000003c-4.4 0-8 3.6-8 8 0 4.4000003 3.6 8.0000003 8 8.0000003 4.4 0 8-3.6 8-8.0000003 0-4.4-3.6-8-8-8zm0 14.4000003c-3.52 0-6.4-2.88-6.4-6.4000003 0-3.52 2.88-6.4 6.4-6.4 3.52 0 6.4 2.88 6.4 6.4 0 3.5200003-2.88 6.4000003-6.4 6.4000003zm.4-10.4000003h-1.2v4.8l4.16 2.5600003.64-1.04-3.6-2.1600003z"/></svg>
+	<time class="meta__text" datetime="2018-10-25T00:00:00">October 25, 2018</time>
+</div>
+</div>
+	</header>
+	<div class="content list__excerpt post__content clearfix">
+		AS204994 spans 5 countries (Ireland, UK, Germany, Amsterdam and USA), with 5 servers from 4 providers (3 from Vultr, 1 from VServer.site and 1 from Packet.Net) and some on-prem machines (mix of VMs and Physical routers and machines). this may change over time, so check the homepage
+Upstream providers are listed on the homepage also, but in house I use Virgin Media Business broadband and from there tunnel back to the upstream servers using ZeroTier.
+	</div>
+</article>
 </main>
 
 
-
-
 			</section>
-			<aside class="sidebar"><div class="widget-search widget">
+			
+<aside class="sidebar"><div class="widget-search widget">
 	<form class="widget-search__form" role="search" method="get" action="https://google.com/search">
 		<label>
 			<input class="widget-search__field" type="search" placeholder="SEARCH..." value="" name="q" aria-label="SEARCH...">
