@@ -17,7 +17,7 @@
       <pubDate>Mon, 01 Jan 0001 00:00:00 +0000</pubDate>
       
       <guid>https://as204994.net/about/</guid>
-      <description>AS204994 is a research network used to learn about BGP, Networking, Peering, AnyCast and VPN.</description>
+      <description>AS204994 is a research network used to learn about BGP, Networking, Peering, AnyCast and VPN. We use Ubuntu Linux as out main OS, Bird as our main routing engine, Zerotier for interconnections and Git for configuration files.</description>
     </item>
     
     <item>
