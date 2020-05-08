@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>ZeroTier &#8211; as204994</title>
+	<atom:link href="https://as204994.net/post/tag/zerotier/feed/" rel="self" type="application/rss+xml" />
+	<link>https://as204994.net/</link>
+	<description>AS204994 homepage</description>
+	<lastBuildDate>Tue, 03 Dec 2019 11:26:41 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.1</generator>
+	<item>
+		<title>Telling ZeroTier not to use Peering LANs for traffic</title>
+		<link>https://as204994.net/post/telling-zerotier-not-to-use-peering-lans-for-traffic/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Mon, 25 Nov 2019 21:57:48 +0000</pubDate>
+				<category><![CDATA[Information]]></category>
+		<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[Flooding]]></category>
+		<category><![CDATA[IXes]]></category>
+		<category><![CDATA[Peering]]></category>
+		<category><![CDATA[VLAN]]></category>
+		<category><![CDATA[ZeroTier]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=69</guid>
+
+					<description><![CDATA[So, I use ZeroTier as my Layer 2 Mesh network between VMs and Physical hosts, and this morning I got a message telling me I was sending non allowed traffic over the DE-CIX VLAN&#8230; This was news to me, but after some digging, and help from Marek over at Vserver.Site, i managed to find out [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>So, I use <a href="https://www.zerotier.com">ZeroTier </a>as my Layer 2 Mesh network between VMs and Physical hosts, and this morning I got a message telling me I was sending non allowed traffic over the <a href="https://www.de-cix.com">DE-CIX</a> VLAN&#8230; This was news to me, but after some digging, and help from Marek over at <a href="https://cp.vserver.site/aff.php?aff=16">Vserver.Site</a>, i managed to find out it was ZeroTier traffic causing the problem. ZeroTier in its nature will try and use all NICs on a machine to find an internet connection&#8230; but if you are on a peering VLAN, you do not want this to happen&#8230;</p>
+
+
+
+<p>So, after more digging, I found the &#8220;<a href="https://github.com/zerotier/ZeroTierOne/tree/master/service">Local Configuration File</a>&#8221; in ZeroTier. This includes some features I did not know about, including how to place Subnets and Interfaces into the &#8220;Black List&#8221; so they wont be used by ZeroTier. </p>
+
+
+
+<p>I wont reproduce the config file here, but i will give some tips, and explain what i have done. First, on Debian and Ubuntu, the file lives in <code>/var/lib/zerotier-one/local.conf</code>. If the file does not exist, you can create it. Its a standard JSON file. What i ended up adding was an IP range for each IX the box was connected to  and marked it as black listed. Under settings, i also set the <code>interfacePrefixBlacklist </code>with a list of the interfaces connected to the IXes. an example is below:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/59893743403c57e073edefffb0cfe237.js"></script>
+
+
+
+<p>This is the example for my machine connected to <a href="http://www.de-cix.net">DE-CIX</a>. ens19, 20 and 21 are connected to the peering VLANs on <a href="https://muc.de-cix.net/">Munich</a>, <a href="https://dus.de-cix.net/">Dusseldorf</a> and <a href="https://ham.de-cix.net/">Hamburg</a>.   Given I have stopped sending bad IPv6 traffic, my guess then is the  <code>interfacePrefixBlacklist</code> is only required, but I added the IPs also, just in case&#8230; I should probably include V6 here too&#8230; </p>
+
+
+
+<p>When you make those changes, a restart of  the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX&#8230; Marek When you make those changes, a restart of  the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX&#8230; </p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Page Caching using disk: enhanced 
+
+Page cache debug info:
+Engine:             disk: enhanced
+Cache key:          wp.as204994.net/post/tag/zerotier/feed/_index_ssl.xml
+Creation Time:      1588972560.000s
+Header info:
+X-Powered-By:       PHP/7.2.24
+Last-Modified:      Wed, 01 Apr 2020 15:12:07 GMT
+ETag:               "65f1bf494f3ce640de3ef9d3a0d6d9b2"
+Link:               <https://as204994.net/wp-json/>; rel="https://api.w.org/"
+Content-Type:       application/rss+xml; charset=UTF-8
+
+Minified using disk
+
+Minify debug info:
+Theme:              50b73
+Template:           archive
+
+Database Caching using disk
+
+Db cache debug info:
+Total queries:      2
+Cached queries:     0
+Total query time:   0.0004
+
+Served from: as204994.net @ 2020-05-08 21:16:00 by W3 Total Cache
+-->
