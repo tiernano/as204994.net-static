@@ -1,0 +1,94 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>infromation &#8211; as204994</title>
+	<atom:link href="https://as204994.net/post/tag/infromation/feed/" rel="self" type="application/rss+xml" />
+	<link>https://as204994.net/</link>
+	<description>AS204994 homepage</description>
+	<lastBuildDate>Thu, 15 Aug 2019 07:14:50 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.1</generator>
+	<item>
+		<title>Quick Overview of the network</title>
+		<link>https://as204994.net/post/quick-overview/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Thu, 25 Oct 2018 17:05:26 +0000</pubDate>
+				<category><![CDATA[Information]]></category>
+		<category><![CDATA[announcements]]></category>
+		<category><![CDATA[infromation]]></category>
+		<guid isPermaLink="false">http://192.168.1.119/?p=13</guid>
+
+					<description><![CDATA[AS204994 spans 5 countries (Ireland, UK, Germany, Amsterdam and USA), with 5 servers from 4 providers (3 from Vultr, 1 from VServer.site and 1 from Packet.Net) and some on-prem machines (mix of VMs and Physical routers and machines). this may change over time, so check the homepage Upstream providers are listed on the homepage also, but in house I use Virgin Media Business [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>AS204994 spans 5 countries (Ireland, UK, Germany, Amsterdam and USA), with 5 servers from 4 providers (3 from <a href="https://www.vultr.com/?ref=6925432">Vultr</a>, 1 from <a href="https://cp.vserver.site/aff.php?aff=16">VServer.site</a> and 1 from <a href="https://www.packet.net/">Packet.Net</a>) and some on-prem machines (mix of VMs and Physical routers and machines). this may change over time, so check the <a href="https://as204994.net/">homepage</a></p>
+
+
+
+<p>Upstream providers are listed on the <a href="https://as204994.net/">homepage</a> also, but in house I use <a href="https://www.virginmedia.ie/business/business-broadband-phone/">Virgin Media Business broadband</a> and from there tunnel back to the upstream servers using <a href="https://www.zerotier.com/">ZeroTier</a>. I also connect to <a href="https://evix.org/">EVIX</a> over ZeroTier and to both <a href="https://www.locix.online/">LocIX</a> and <a href="http://kleyrex.net/">KleyReX</a> with the VM in <a href="https://cp.vserver.site/aff.php?aff=16">VServer.site</a>.</p>
+
+
+
+<p>Once the connection is made, I use&nbsp;<a href="https://bird.network.cz/">Bird</a>&nbsp;BGP to announce and receive routes from each of the providers. This is done as follows:</p>
+
+
+
+<ul><li>I have a /24 block of IPs announced though Vultr, Packet, VServer.Site and also though each of the IXs I’m connected to. Currently I am only using V4 to try and get this sorted first, then will add my /48 V6 space to the mix.</li><li>the /24 is split into a /28 for “internal peering” (ZeroTier network), a /28 for Any cast stuff (websites hosted across multiple sites, etc), a /27 for the house and multiple /28s, one for each of the VMs.</li><li>Any upstream VM that gets a full (or even partial) route feed announces all those routes (bar some filtered routes) back to Dublin. It also announces the /28 it has back to all other (internal) VMs. Only the /24 is announced to the upstream.</li><li>If a provider does not give any routes back, we leave it as is. It will still announce its internal /28 back to the rest of the network.</li><li>All servers also run a copy of&nbsp;<a href="https://www.nginx.com/">NGinx</a>&nbsp;which then hosts any of the anycast websites (<a href="https://www.tiernanotoole.ie/">tiernanotoole.ie</a>&nbsp;currently being the main one). That site is “hidden” behind&nbsp;<a href="https://www.cloudflare.com/">CloudFlare</a>&nbsp;for their security and bandwidth/caching features.</li><li>In house, all routes are managed by a single Ubuntu VM running on Hyper-V. It has a main internet connection with Virgin Media, and then connects internally to the rest of the network. Its set to allow internal routing, and the /27 for the house is connected to an internal VLAN.</li><li>I have a Ubiquiti EdgeRouter POE connected to that VLAN and it gets multiple of those IPs. Workstations, phones, etc, the connect to it and use it as a connection to the internet.</li></ul>
+
+
+
+<p>So far, this works about 90% of the time. This is not currently the production network: Netflix, Amazon Prime Video, etc, wont work, so all media devices go direct to the internet over a different VLAN (Luckily Virgin Media Business gave me a /29 to use). There is some work that will need to be done before it can go full production. Ideally, if I could announce my V4 and V6 though Virgin Media, that would make life easier, but we will see if they can sort it out.</p>
+
+
+
+<p>So, Any questions? You can mail me at Tiernan [at] as204994 [dot] net.</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Page Caching using disk: enhanced 
+
+Page cache debug info:
+Engine:             disk: enhanced
+Cache key:          wp.as204994.net/post/tag/infromation/feed/_index_ssl.xml
+Creation Time:      1588972556.000s
+Header info:
+X-Powered-By:       PHP/7.2.24
+Last-Modified:      Wed, 01 Apr 2020 15:12:07 GMT
+ETag:               "65f1bf494f3ce640de3ef9d3a0d6d9b2"
+Link:               <https://as204994.net/wp-json/>; rel="https://api.w.org/"
+Content-Type:       application/rss+xml; charset=UTF-8
+
+Minified using disk
+
+Minify debug info:
+Theme:              50b73
+Template:           archive
+
+Database Caching using disk
+
+Db cache debug info:
+Total queries:      2
+Cached queries:     0
+Total query time:   0.0004
+
+Served from: as204994.net @ 2020-05-08 21:15:56 by W3 Total Cache
+-->
