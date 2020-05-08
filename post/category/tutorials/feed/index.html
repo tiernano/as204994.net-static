@@ -1,0 +1,303 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Tutorials &#8211; as204994</title>
+	<atom:link href="https://as204994.net/post/category/tutorials/feed/" rel="self" type="application/rss+xml" />
+	<link>https://as204994.net/</link>
+	<description>AS204994 homepage</description>
+	<lastBuildDate>Tue, 03 Dec 2019 11:26:41 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.1</generator>
+	<item>
+		<title>Telling ZeroTier not to use Peering LANs for traffic</title>
+		<link>https://as204994.net/post/telling-zerotier-not-to-use-peering-lans-for-traffic/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Mon, 25 Nov 2019 21:57:48 +0000</pubDate>
+				<category><![CDATA[Information]]></category>
+		<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[Flooding]]></category>
+		<category><![CDATA[IXes]]></category>
+		<category><![CDATA[Peering]]></category>
+		<category><![CDATA[VLAN]]></category>
+		<category><![CDATA[ZeroTier]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=69</guid>
+
+					<description><![CDATA[So, I use ZeroTier as my Layer 2 Mesh network between VMs and Physical hosts, and this morning I got a message telling me I was sending non allowed traffic over the DE-CIX VLAN&#8230; This was news to me, but after some digging, and help from Marek over at Vserver.Site, i managed to find out [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>So, I use <a href="https://www.zerotier.com">ZeroTier </a>as my Layer 2 Mesh network between VMs and Physical hosts, and this morning I got a message telling me I was sending non allowed traffic over the <a href="https://www.de-cix.com">DE-CIX</a> VLAN&#8230; This was news to me, but after some digging, and help from Marek over at <a href="https://cp.vserver.site/aff.php?aff=16">Vserver.Site</a>, i managed to find out it was ZeroTier traffic causing the problem. ZeroTier in its nature will try and use all NICs on a machine to find an internet connection&#8230; but if you are on a peering VLAN, you do not want this to happen&#8230;</p>
+
+
+
+<p>So, after more digging, I found the &#8220;<a href="https://github.com/zerotier/ZeroTierOne/tree/master/service">Local Configuration File</a>&#8221; in ZeroTier. This includes some features I did not know about, including how to place Subnets and Interfaces into the &#8220;Black List&#8221; so they wont be used by ZeroTier. </p>
+
+
+
+<p>I wont reproduce the config file here, but i will give some tips, and explain what i have done. First, on Debian and Ubuntu, the file lives in <code>/var/lib/zerotier-one/local.conf</code>. If the file does not exist, you can create it. Its a standard JSON file. What i ended up adding was an IP range for each IX the box was connected to  and marked it as black listed. Under settings, i also set the <code>interfacePrefixBlacklist </code>with a list of the interfaces connected to the IXes. an example is below:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/59893743403c57e073edefffb0cfe237.js"></script>
+
+
+
+<p>This is the example for my machine connected to <a href="http://www.de-cix.net">DE-CIX</a>. ens19, 20 and 21 are connected to the peering VLANs on <a href="https://muc.de-cix.net/">Munich</a>, <a href="https://dus.de-cix.net/">Dusseldorf</a> and <a href="https://ham.de-cix.net/">Hamburg</a>.   Given I have stopped sending bad IPv6 traffic, my guess then is the  <code>interfacePrefixBlacklist</code> is only required, but I added the IPs also, just in case&#8230; I should probably include V6 here too&#8230; </p>
+
+
+
+<p>When you make those changes, a restart of  the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX&#8230; Marek When you make those changes, a restart of  the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX&#8230; </p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Reverse DNS with Route53 and DNSControl</title>
+		<link>https://as204994.net/post/reverse-dns-with-route53-and-dnscontrol/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Sun, 15 Sep 2019 12:58:14 +0000</pubDate>
+				<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[Automation]]></category>
+		<category><![CDATA[DNS]]></category>
+		<category><![CDATA[DNSControl]]></category>
+		<category><![CDATA[Reverse DNS]]></category>
+		<category><![CDATA[Route53]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=59</guid>
+
+					<description><![CDATA[I was looking for a nice and somewhat simple way of managing my Reverse DNS settings, and I think i found it. I use DNSControl for managing all my DNS records for all (30+) domains, so i decided to see if I could get it to work for my Reverse (PTR) records too&#8230; and it [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>I was looking for a nice and somewhat simple way of managing my Reverse DNS settings, and I think i found it. I use <a href="https://github.com/StackExchange/dnscontrol">DNSControl</a> for managing all my DNS records for all (30+) domains, so i decided to see if I could get it to work for my Reverse (PTR) records too&#8230; and it works!</p>
+
+
+
+<p>First, <a href="https://github.com/StackExchange/dnscontrol">DNSControl</a> is a project from the <a href="http://www.stackoverflow.com">StackOverflow</a> Guys and Gals, that allows easy enough managing of your DNS records. There is a bit of a learning curve, but once your over that, your laughing! </p>
+
+
+
+<p>Second, <a href="https://aws.amazon.com/route53/">Route53</a> is Amazon&#8217;s DNS service, as part of <a href="https://aws.amazon.com">AWS</a>. You can use it for AWS internal specific stuff, DNS resolution for your public domains, or, in my case, a reverse DNS for my IP block. I also use it for a private DNS for my ZeroTier network too, but that&#8217;s a separate matter&#8230;</p>
+
+
+
+<p>So, to get them both hooked up, first you need DNSControl configured. They have <a href="https://stackexchange.github.io/dnscontrol/">extensive documentation on the matter</a>, so check that out, as i wont be going into too much detail on that part.</p>
+
+
+
+<p>After creating a record in Route53 on the AWS portal, my credentials file with details for Route53, creating a &#8220;noreg&#8221; record, etc, i then created the reverse domain for my IP range:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/8c9b8d8091c84612aaa25a6cf8bf12f3.js"></script>
+
+
+
+<p><code>REV('185.186.67.0/24') </code>is a custom block that will automagically create the correct record, which in my case would be <code>67.186.185.in-addr.arpa</code>. you could leave that in there, but if you have a few, it may be prone to &#8220;fat fingering&#8221; the records&#8230; </p>
+
+
+
+<p>Next, you have all your PTR records. each one has the last part of the IP, along with the name of it. Once you have all your records, it is then a matter of pushing to Route53 using DNSControl: </p>
+
+
+
+<p><code>./dnscontrol-Darwin preview --domains 67.186.185.in-addr.arpa</code></p>
+
+
+
+<p>will show you what changes have been made, assuming you have the config correct.</p>
+
+
+
+<p><code>./dnscontrol-Darwin push --domains 67.186.185.in-addr.arpa</code></p>
+
+
+
+<p>will do the actual pushing.</p>
+
+
+
+<p>It is then just a matter of making sure you have the correct records pointing at the correct DNS servers, as per the <a href="https://www.ripe.net/manage-ips-and-asns/db/support/configuring-reverse-dns">RIPE (or other provider&#8217;s) documentation</a>. And that is that. A quick &#8220;dig&#8221; on the command line shows your work:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/a7b3ba53ca8779828a3e3df84b7fcd4f.js"></script>
+
+
+
+<p>That should be it! happy days! and in theory, since the config file is &#8220;just&#8221; Javascript, you could pull it from a DB, a IPAM such as <a href="https://netbox.readthedocs.io/en/stable/">Netbox</a>, or some other place. Thats my next challenge&#8230;</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Building Tinc 1.1 (pre) on Ubuntu 18.04</title>
+		<link>https://as204994.net/post/building-tinc-1-1-pre-on-ubuntu-18-04/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Thu, 25 Jul 2019 13:32:56 +0000</pubDate>
+				<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[Mesh]]></category>
+		<category><![CDATA[Tinc]]></category>
+		<category><![CDATA[VPN]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=45</guid>
+
+					<description><![CDATA[So, a while back, I used Tinc for as a mesh VPN network. Tinc, for the uninitiated, is as follows: tinc is a Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet tinc-vpn.org Its been a while, but i noticed that they did [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>So, a while back, I used Tinc for as a mesh VPN network. Tinc, for the uninitiated, is as follows:</p>
+
+
+
+<blockquote class="wp-block-quote"><p>tinc is a Virtual Private Network (VPN) daemon that uses tunnelling and encryption to create a secure private network between hosts on the Internet </p><cite><a href="https://www.tinc-vpn.org">tinc-vpn.org</a></cite></blockquote>
+
+
+
+<p>Its been a while, but i noticed that they did have a version 1.1 preview, and did some tests with it previouly, and seen some decient perf with it. But, due to a mix of laziness, testing and more laziness, i ended up on ZeroTier for my internal peering network&#8230; </p>
+
+
+
+<p>Now, however, i am starting to look at other options. This post will explain how to build Tinc 1.1 preview on Ubuntu 18.04. I will look into other options later on&#8230;</p>
+
+
+
+<p>First, this will not be a configuration of Tinc&#8230; I am only building it.</p>
+
+
+
+<p>You need to install some Apt Packages for the build to run:</p>
+
+
+
+<p><code>sudo apt update</code></p>
+
+
+
+<p><code>sudo apt install build-essential libncurses5-dev libreadline6-dev libzlcore-dev zlib1g-dev liblzo2-dev libssl-dev</code></p>
+
+
+
+<p>next, download the source and extract it:</p>
+
+
+
+<p><code>wget https://www.tinc-vpn.org/packages/tinc-1.1pre17.tar.gz</code></p>
+
+
+
+<p><code>tar -zxvf  tinc-1.1pre17.tar.gz</code></p>
+
+
+
+<p><code>cd  tinc-1.1pre17</code></p>
+
+
+
+<p>next, configure and build. </p>
+
+
+
+<p><code>./configure</code></p>
+
+
+
+<p><code>make -j5</code></p>
+
+
+
+<p>I use -j5 to use all 4 cores on my machine + 1 (its something i read years ago and i keep doing this). Just change that number as required.</p>
+
+
+
+<p>Now your done. you can do a <code>sudo  make install</code> to install in the required folders, or just run it from where its build. </p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+		<item>
+		<title>Bird BGP Daemon tips and tricks</title>
+		<link>https://as204994.net/post/bird-bgp-daemon-tips-and-tricks/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Fri, 05 Jul 2019 08:41:52 +0000</pubDate>
+				<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[BGP]]></category>
+		<category><![CDATA[Tutorails]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=35</guid>
+
+					<description><![CDATA[Some of these are more than likely known to people, but i though i would add them here. Partially for you and partially for me! Useful Links Deploying Bird with Ansible. I use Ansible in house to manage all servers. I did have to tweak this config, and some day i will sanitize it and [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>Some of these are more than likely known to people, but i though i would add them here. Partially for you and partially for me! </p>
+
+
+
+<h2>Useful Links</h2>
+
+
+
+<ul><li><a href="https://github.com/logan2211/ansible-bird">Deploying Bird with Ansible</a>. I use Ansible in house to manage all servers. I did have to tweak this config, and some day i will sanitize it and upload for others to see.</li><li><a href="https://github.com/czerwonk/bird_exporter">Bird Prometheus Exporter</a>: export your route details to <a href="https://prometheus.io/">Prometheus</a> for monitoring. Handy for monitoring your servers.</li><li><a href="https://github.com/alice-lg/alice-lg">Alice BGP</a> and <a href="https://github.com/alice-lg/birdwatcher">BirdWatcher</a>:  Looking Glass an API for monitoring Bird. </li></ul>
+
+
+
+<h2>Command Line stuff</h2>
+
+
+
+<ul><li><code>birdc show route for 185.186.67.33</code> shows all routes known for that ip address</li><li><code>birdc show route protocol INTERNAL_LON1</code> shows all routes for a given Peer.</li><li><code>birdc show route where bgp_path</code> ~ [= * 15133  * =]  show routes where AS15133 is in the path list.</li><li><code>birdc show route where bgp_path.last</code> = 15133  show routes where AS15133 is the LAST path. </li></ul>
+
+
+
+<h2>Presentations</h2>
+
+
+
+<ul><li><a href="https://www.slideshare.net/apnic/bird-routing-daemon">Bird routing Daemon introduction</a></li><li><a href="https://conferences.heanet.ie/2016/files/247/Routers%20-%20from%20Cisco%20Juniper%20hardware%20to%20Linux%20Quagga%20software.pdf">HEAnet: from Cisco/Juniper to Linux/Quagga</a>.</li></ul>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Page Caching using disk: enhanced 
+
+Page cache debug info:
+Engine:             disk: enhanced
+Cache key:          wp.as204994.net/post/category/tutorials/feed/_index_ssl.xml
+Creation Time:      1588972552.000s
+Header info:
+X-Powered-By:       PHP/7.2.24
+Last-Modified:      Wed, 01 Apr 2020 15:12:07 GMT
+ETag:               "65f1bf494f3ce640de3ef9d3a0d6d9b2"
+Link:               <https://as204994.net/wp-json/>; rel="https://api.w.org/"
+Content-Type:       application/rss+xml; charset=UTF-8
+
+Minified using disk
+
+Minify debug info:
+Theme:              50b73
+Template:           archive
+
+Database Caching using disk
+
+Db cache debug info:
+Total queries:      2
+Cached queries:     0
+Total query time:   0.0005
+
+Served from: as204994.net @ 2020-05-08 21:15:52 by W3 Total Cache
+-->
