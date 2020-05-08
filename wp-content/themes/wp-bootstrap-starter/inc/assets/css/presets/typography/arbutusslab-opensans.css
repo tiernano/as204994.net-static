@@ -1,0 +1,8 @@
+body {font-family: open sans,sans-serif;margin: 0;}
+h1, h2, h3, h4, h5, h6 {font-family: arbutus slab,serif;}
+.navbar-brand {padding-top: .15rem;}
+.navbar-brand>a {font-family: arbutus slab,serif;text-transform: uppercase;}
+#masthead .navbar-nav>li a {border-bottom-width: 0;display: block;font-family: open sans,sans-serif;padding: 10px;text-transform: uppercase;}
+div#page-sub-header h1 {font-family: arbutus slab,serif;}
+#secondary .widget-title {font-family: arbutus slab,serif;}
+.entry-meta {font-family: arbutus slab,serif;}
