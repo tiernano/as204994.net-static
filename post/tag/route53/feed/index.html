@@ -1,0 +1,133 @@
+<?xml version="1.0" encoding="UTF-8"?><rss version="2.0"
+	xmlns:content="http://purl.org/rss/1.0/modules/content/"
+	xmlns:wfw="http://wellformedweb.org/CommentAPI/"
+	xmlns:dc="http://purl.org/dc/elements/1.1/"
+	xmlns:atom="http://www.w3.org/2005/Atom"
+	xmlns:sy="http://purl.org/rss/1.0/modules/syndication/"
+	xmlns:slash="http://purl.org/rss/1.0/modules/slash/"
+	>
+
+<channel>
+	<title>Route53 &#8211; as204994</title>
+	<atom:link href="https://as204994.net/post/tag/route53/feed/" rel="self" type="application/rss+xml" />
+	<link>https://as204994.net/</link>
+	<description>AS204994 homepage</description>
+	<lastBuildDate>Sun, 15 Sep 2019 12:58:17 +0000</lastBuildDate>
+	<language>en-US</language>
+	<sy:updatePeriod>
+	hourly	</sy:updatePeriod>
+	<sy:updateFrequency>
+	1	</sy:updateFrequency>
+	<generator>https://wordpress.org/?v=5.4.1</generator>
+	<item>
+		<title>Reverse DNS with Route53 and DNSControl</title>
+		<link>https://as204994.net/post/reverse-dns-with-route53-and-dnscontrol/</link>
+		
+		<dc:creator><![CDATA[tiernano]]></dc:creator>
+		<pubDate>Sun, 15 Sep 2019 12:58:14 +0000</pubDate>
+				<category><![CDATA[Tutorials]]></category>
+		<category><![CDATA[Automation]]></category>
+		<category><![CDATA[DNS]]></category>
+		<category><![CDATA[DNSControl]]></category>
+		<category><![CDATA[Reverse DNS]]></category>
+		<category><![CDATA[Route53]]></category>
+		<guid isPermaLink="false">https://as204994.net/?p=59</guid>
+
+					<description><![CDATA[I was looking for a nice and somewhat simple way of managing my Reverse DNS settings, and I think i found it. I use DNSControl for managing all my DNS records for all (30+) domains, so i decided to see if I could get it to work for my Reverse (PTR) records too&#8230; and it [&#8230;]]]></description>
+										<content:encoded><![CDATA[
+<p>I was looking for a nice and somewhat simple way of managing my Reverse DNS settings, and I think i found it. I use <a href="https://github.com/StackExchange/dnscontrol">DNSControl</a> for managing all my DNS records for all (30+) domains, so i decided to see if I could get it to work for my Reverse (PTR) records too&#8230; and it works!</p>
+
+
+
+<p>First, <a href="https://github.com/StackExchange/dnscontrol">DNSControl</a> is a project from the <a href="http://www.stackoverflow.com">StackOverflow</a> Guys and Gals, that allows easy enough managing of your DNS records. There is a bit of a learning curve, but once your over that, your laughing! </p>
+
+
+
+<p>Second, <a href="https://aws.amazon.com/route53/">Route53</a> is Amazon&#8217;s DNS service, as part of <a href="https://aws.amazon.com">AWS</a>. You can use it for AWS internal specific stuff, DNS resolution for your public domains, or, in my case, a reverse DNS for my IP block. I also use it for a private DNS for my ZeroTier network too, but that&#8217;s a separate matter&#8230;</p>
+
+
+
+<p>So, to get them both hooked up, first you need DNSControl configured. They have <a href="https://stackexchange.github.io/dnscontrol/">extensive documentation on the matter</a>, so check that out, as i wont be going into too much detail on that part.</p>
+
+
+
+<p>After creating a record in Route53 on the AWS portal, my credentials file with details for Route53, creating a &#8220;noreg&#8221; record, etc, i then created the reverse domain for my IP range:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/8c9b8d8091c84612aaa25a6cf8bf12f3.js"></script>
+
+
+
+<p><code>REV('185.186.67.0/24') </code>is a custom block that will automagically create the correct record, which in my case would be <code>67.186.185.in-addr.arpa</code>. you could leave that in there, but if you have a few, it may be prone to &#8220;fat fingering&#8221; the records&#8230; </p>
+
+
+
+<p>Next, you have all your PTR records. each one has the last part of the IP, along with the name of it. Once you have all your records, it is then a matter of pushing to Route53 using DNSControl: </p>
+
+
+
+<p><code>./dnscontrol-Darwin preview --domains 67.186.185.in-addr.arpa</code></p>
+
+
+
+<p>will show you what changes have been made, assuming you have the config correct.</p>
+
+
+
+<p><code>./dnscontrol-Darwin push --domains 67.186.185.in-addr.arpa</code></p>
+
+
+
+<p>will do the actual pushing.</p>
+
+
+
+<p>It is then just a matter of making sure you have the correct records pointing at the correct DNS servers, as per the <a href="https://www.ripe.net/manage-ips-and-asns/db/support/configuring-reverse-dns">RIPE (or other provider&#8217;s) documentation</a>. And that is that. A quick &#8220;dig&#8221; on the command line shows your work:</p>
+
+
+
+<script src="https://gist.github.com/tiernano/a7b3ba53ca8779828a3e3df84b7fcd4f.js"></script>
+
+
+
+<p>That should be it! happy days! and in theory, since the config file is &#8220;just&#8221; Javascript, you could pull it from a DB, a IPAM such as <a href="https://netbox.readthedocs.io/en/stable/">Netbox</a>, or some other place. Thats my next challenge&#8230;</p>
+]]></content:encoded>
+					
+		
+		
+			</item>
+	</channel>
+</rss>
+
+<!--
+Performance optimized by W3 Total Cache. Learn more: https://www.boldgrid.com/w3-total-cache/
+
+Page Caching using disk: enhanced 
+
+Page cache debug info:
+Engine:             disk: enhanced
+Cache key:          wp.as204994.net/post/tag/route53/feed/_index_ssl.xml
+Creation Time:      1588972558.000s
+Header info:
+X-Powered-By:       PHP/7.2.24
+Last-Modified:      Wed, 01 Apr 2020 15:12:07 GMT
+ETag:               "65f1bf494f3ce640de3ef9d3a0d6d9b2"
+Link:               <https://as204994.net/wp-json/>; rel="https://api.w.org/"
+Content-Type:       application/rss+xml; charset=UTF-8
+
+Minified using disk
+
+Minify debug info:
+Theme:              50b73
+Template:           archive
+
+Database Caching using disk
+
+Db cache debug info:
+Total queries:      2
+Cached queries:     0
+Total query time:   0.0003
+
+Served from: as204994.net @ 2020-05-08 21:15:58 by W3 Total Cache
+-->
