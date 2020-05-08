@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en-US"><head><meta charset="UTF-8"><meta name="viewport" content="width=device-width, initial-scale=1"><meta http-equiv="X-UA-Compatible" content="IE=edge"><title>Information – as204994</title><link rel="dns-prefetch" href="https://as204994.net"><link rel="dns-prefetch" href="//fonts.googleapis.com"><link rel="dns-prefetch" href="//s.w.org"><link rel="stylesheet" href="https://as204994.net/wp-content/cache/minify/68cba.css" media="all"><link rel="stylesheet" id="wp-bootstrap-starter-montserrat-opensans-font-css" href="https://fonts.googleapis.com/css?family=Montserrat%7COpen+Sans%3A300%2C300i%2C400%2C400i%2C600%2C600i%2C700%2C800&ver=5.4.1" type="text/css" media="all"><link rel="stylesheet" href="https://as204994.net/wp-content/cache/minify/3383d.css" media="all"><script src="https://as204994.net/wp-content/cache/minify/df983.js"></script><script>
+			(function(i,s,o,g,r,a,m){i['GoogleAnalyticsObject']=r;i[r]=i[r]||function(){
+			(i[r].q=i[r].q||[]).push(arguments)},i[r].l=1*new Date();a=s.createElement(o),
+			m=s.getElementsByTagName(o)[0];a.async=1;a.src=g;m.parentNode.insertBefore(a,m)
+			})(window,document,'script','https://www.google-analytics.com/analytics.js','ga');
+			ga('create', 'UA-220614-24', 'auto');
+			ga('require', 'linkid');
+			ga('set', 'anonymizeIp', true);
+			ga('send', 'pageview');
+		</script><style type="text/css">
+        #page-sub-header { background: #fff; }
+    </style></head><body class="archive category category-information category-15 hfeed theme-preset-active">
+<div id="page" class="site">
+<a class="skip-link screen-reader-text" href="#content">Skip to content</a>
+<header id="masthead" class="site-header navbar-static-top navbar-dark bg-primary" role="banner"><div class="container">
+<nav class="navbar navbar-expand-xl p-0"><div class="navbar-brand">
+<a class="site-title" href="https://as204994.net/">as204994</a>
+</div>
+<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#main-nav" aria-controls="" aria-expanded="false" aria-label="Toggle navigation">
+<span class="navbar-toggler-icon"></span>
+</button>
+<div id="main-nav" class="collapse navbar-collapse justify-content-end"><ul id="menu-links" class="navbar-nav"><li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-17" class="menu-item menu-item-type-custom menu-item-object-custom menu-item-17 nav-item"><a title="Home" href="https://as204994.net" class="nav-link">Home</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-18" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-18 nav-item"><a title="About" href="https://as204994.net/about/" class="nav-link">About</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-19" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-19 nav-item"><a title="Peering" href="https://as204994.net/peering/" class="nav-link">Peering</a></li>
+<li itemscope="itemscope" itemtype="https://www.schema.org/SiteNavigationElement" id="menu-item-31" class="menu-item menu-item-type-post_type menu-item-object-page menu-item-31 nav-item"><a title="Virtual Peering Points" href="https://as204994.net/virtual-peering-points/" class="nav-link">Virtual Peering Points</a></li>
+</ul></div>
+</nav></div>
+</header><div id="content" class="site-content">
+<div class="container">
+<div class="row">
+<section id="primary" class="content-area col-sm-12 col-lg-8"><main id="main" class="site-main" role="main"><header class="page-header"><h1 class="page-title">Category: Information</h1> </header><article id="post-69" class="post-69 post type-post status-publish format-standard hentry category-information category-tutorials tag-flooding tag-ixes tag-peering tag-vlan tag-zerotier"><div class="post-thumbnail">
+</div>
+<header class="entry-header"><h2 class="entry-title"><a href="https://as204994.net/post/telling-zerotier-not-to-use-peering-lans-for-traffic/" rel="bookmark">Telling ZeroTier not to use Peering LANs for traffic</a></h2> <div class="entry-meta">
+<span class="posted-on">Posted on <a href="https://as204994.net/post/telling-zerotier-not-to-use-peering-lans-for-traffic/" rel="bookmark"><time class="entry-date published" datetime="2019-11-25T21:57:48+00:00">November 25, 2019</time></a></span> | <span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://as204994.net/post/author/tiernano/">tiernano</a></span></span> </div>
+</header><div class="entry-content">
+<p>So, I use <a href="https://www.zerotier.com">ZeroTier </a>as my Layer 2 Mesh network between VMs and Physical hosts, and this morning I got a message telling me I was sending non allowed traffic over the <a href="https://www.de-cix.com">DE-CIX</a> VLAN… This was news to me, but after some digging, and help from Marek over at <a href="https://cp.vserver.site/aff.php?aff=16">Vserver.Site</a>, i managed to find out it was ZeroTier traffic causing the problem. ZeroTier in its nature will try and use all NICs on a machine to find an internet connection… but if you are on a peering VLAN, you do not want this to happen…</p>
+<p>So, after more digging, I found the “<a href="https://github.com/zerotier/ZeroTierOne/tree/master/service">Local Configuration File</a>” in ZeroTier. This includes some features I did not know about, including how to place Subnets and Interfaces into the “Black List” so they wont be used by ZeroTier. </p>
+<p>I wont reproduce the config file here, but i will give some tips, and explain what i have done. First, on Debian and Ubuntu, the file lives in <code>/var/lib/zerotier-one/local.conf</code>. If the file does not exist, you can create it. Its a standard JSON file. What i ended up adding was an IP range for each IX the box was connected to and marked it as black listed. Under settings, i also set the <code>interfacePrefixBlacklist </code>with a list of the interfaces connected to the IXes. an example is below:</p>
+<script src="https://gist.github.com/tiernano/59893743403c57e073edefffb0cfe237.js"></script><p>This is the example for my machine connected to <a href="http://www.de-cix.net">DE-CIX</a>. ens19, 20 and 21 are connected to the peering VLANs on <a href="https://muc.de-cix.net/">Munich</a>, <a href="https://dus.de-cix.net/">Dusseldorf</a> and <a href="https://ham.de-cix.net/">Hamburg</a>. Given I have stopped sending bad IPv6 traffic, my guess then is the <code>interfacePrefixBlacklist</code> is only required, but I added the IPs also, just in case… I should probably include V6 here too… </p>
+<p>When you make those changes, a restart of the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX… Marek When you make those changes, a restart of the ZeroTier service is required. And that is that. After Merak did some checks, and he was happy it was fixed, I was allowed back on the IX… </p>
+</div>
+<footer class="entry-footer"><span class="cat-links">Posted in <a href="https://as204994.net/post/category/information/" rel="category tag">Information</a>, <a href="https://as204994.net/post/category/tutorials/" rel="category tag">Tutorials</a></span> | <span class="tags-links">Tagged <a href="https://as204994.net/post/tag/flooding/" rel="tag">Flooding</a>, <a href="https://as204994.net/post/tag/ixes/" rel="tag">IXes</a>, <a href="https://as204994.net/post/tag/peering/" rel="tag">Peering</a>, <a href="https://as204994.net/post/tag/vlan/" rel="tag">VLAN</a>, <a href="https://as204994.net/post/tag/zerotier/" rel="tag">ZeroTier</a></span> </footer></article><article id="post-13" class="post-13 post type-post status-publish format-standard hentry category-information tag-announcements tag-infromation"><div class="post-thumbnail">
+</div>
+<header class="entry-header"><h2 class="entry-title"><a href="https://as204994.net/post/quick-overview/" rel="bookmark">Quick Overview of the network</a></h2> <div class="entry-meta">
+<span class="posted-on">Posted on <a href="https://as204994.net/post/quick-overview/" rel="bookmark"><time class="entry-date published" datetime="2018-10-25T17:05:26+00:00">October 25, 2018</time></a></span> | <span class="byline"> by <span class="author vcard"><a class="url fn n" href="https://as204994.net/post/author/tiernano/">tiernano</a></span></span> </div>
+</header><div class="entry-content">
+<p>AS204994 spans 5 countries (Ireland, UK, Germany, Amsterdam and USA), with 5 servers from 4 providers (3 from <a href="https://www.vultr.com/?ref=6925432">Vultr</a>, 1 from <a href="https://cp.vserver.site/aff.php?aff=16">VServer.site</a> and 1 from <a href="https://www.packet.net/">Packet.Net</a>) and some on-prem machines (mix of VMs and Physical routers and machines). this may change over time, so check the <a href="https://as204994.net/">homepage</a></p>
+<p>Upstream providers are listed on the <a href="https://as204994.net/">homepage</a> also, but in house I use <a href="https://www.virginmedia.ie/business/business-broadband-phone/">Virgin Media Business broadband</a> and from there tunnel back to the upstream servers using <a href="https://www.zerotier.com/">ZeroTier</a>. I also connect to <a href="https://evix.org/">EVIX</a> over ZeroTier and to both <a href="https://www.locix.online/">LocIX</a> and <a href="http://kleyrex.net/">KleyReX</a> with the VM in <a href="https://cp.vserver.site/aff.php?aff=16">VServer.site</a>.</p>
+<p>Once the connection is made, I use <a href="https://bird.network.cz/">Bird</a> BGP to announce and receive routes from each of the providers. This is done as follows:</p>
+<ul><li>I have a /24 block of IPs announced though Vultr, Packet, VServer.Site and also though each of the IXs I’m connected to. Currently I am only using V4 to try and get this sorted first, then will add my /48 V6 space to the mix.</li><li>the /24 is split into a /28 for “internal peering” (ZeroTier network), a /28 for Any cast stuff (websites hosted across multiple sites, etc), a /27 for the house and multiple /28s, one for each of the VMs.</li><li>Any upstream VM that gets a full (or even partial) route feed announces all those routes (bar some filtered routes) back to Dublin. It also announces the /28 it has back to all other (internal) VMs. Only the /24 is announced to the upstream.</li><li>If a provider does not give any routes back, we leave it as is. It will still announce its internal /28 back to the rest of the network.</li><li>All servers also run a copy of <a href="https://www.nginx.com/">NGinx</a> which then hosts any of the anycast websites (<a href="https://www.tiernanotoole.ie/">tiernanotoole.ie</a> currently being the main one). That site is “hidden” behind <a href="https://www.cloudflare.com/">CloudFlare</a> for their security and bandwidth/caching features.</li><li>In house, all routes are managed by a single Ubuntu VM running on Hyper-V. It has a main internet connection with Virgin Media, and then connects internally to the rest of the network. Its set to allow internal routing, and the /27 for the house is connected to an internal VLAN.</li><li>I have a Ubiquiti EdgeRouter POE connected to that VLAN and it gets multiple of those IPs. Workstations, phones, etc, the connect to it and use it as a connection to the internet.</li></ul><p>So far, this works about 90% of the time. This is not currently the production network: Netflix, Amazon Prime Video, etc, wont work, so all media devices go direct to the internet over a different VLAN (Luckily Virgin Media Business gave me a /29 to use). There is some work that will need to be done before it can go full production. Ideally, if I could announce my V4 and V6 though Virgin Media, that would make life easier, but we will see if they can sort it out.</p>
+<p>So, Any questions? You can mail me at Tiernan [at] as204994 [dot] net.</p>
+</div>
+<footer class="entry-footer"><span class="cat-links">Posted in <a href="https://as204994.net/post/category/information/" rel="category tag">Information</a></span> | <span class="tags-links">Tagged <a href="https://as204994.net/post/tag/announcements/" rel="tag">announcements</a>, <a href="https://as204994.net/post/tag/infromation/" rel="tag">infromation</a></span> </footer></article></main></section><aside id="secondary" class="widget-area col-sm-12 col-lg-4" role="complementary"><section id="pages-2" class="widget widget_pages"><h3 class="widget-title">Pages</h3> <ul><li class="page_item page-item-10"><a href="https://as204994.net/about/">About</a></li>
+<li class="page_item page-item-5"><a href="https://as204994.net/">Homepage</a></li>
+<li class="page_item page-item-8"><a href="https://as204994.net/peering/">Peering</a></li>
+<li class="page_item page-item-30"><a href="https://as204994.net/virtual-peering-points/">Virtual Peering Points</a></li>
+</ul></section><section id="recent-posts-3" class="widget widget_recent_entries"><h3 class="widget-title">Posts</h3> <ul><li>
+<a href="https://as204994.net/post/telling-zerotier-not-to-use-peering-lans-for-traffic/">Telling ZeroTier not to use Peering LANs for traffic</a>
+<span class="post-date">November 25, 2019</span>
+</li>
+<li>
+<a href="https://as204994.net/post/reverse-dns-with-route53-and-dnscontrol/">Reverse DNS with Route53 and DNSControl</a>
+<span class="post-date">September 15, 2019</span>
+</li>
+<li>
+<a href="https://as204994.net/post/building-tinc-1-1-pre-on-ubuntu-18-04/">Building Tinc 1.1 (pre) on Ubuntu 18.04</a>
+<span class="post-date">July 25, 2019</span>
+</li>
+<li>
+<a href="https://as204994.net/post/bird-bgp-daemon-tips-and-tricks/">Bird BGP Daemon tips and tricks</a>
+<span class="post-date">July 5, 2019</span>
+</li>
+<li>
+<a href="https://as204994.net/post/quick-overview/">Quick Overview of the network</a>
+<span class="post-date">October 25, 2018</span>
+</li>
+</ul></section><section id="categories-4" class="widget widget_categories"><h3 class="widget-title">Categories</h3> <ul><li class="cat-item cat-item-15 current-cat"><a aria-current="page" href="https://as204994.net/post/category/information/">Information</a>
+</li>
+<li class="cat-item cat-item-16"><a href="https://as204994.net/post/category/tutorials/">Tutorials</a>
+</li>
+</ul></section></aside></div>
+</div>
+</div>
+<footer id="colophon" class="site-footer navbar-dark bg-primary" role="contentinfo"><div class="container pt-3 pb-3">
+<div class="site-info">
+© 2020 <a href="https://as204994.net">as204994</a> <span class="sep"> | </span>
+<a class="credits" href="https://afterimagedesigns.com/wp-bootstrap-starter/" target="_blank" title="WordPress Technical Support" alt="Bootstrap WordPress Theme">Bootstrap WordPress Theme</a>
+</div>
+</div>
+</footer></div>
+<script src="https://as204994.net/wp-content/cache/minify/67dce.js"></script></body></html>
